@@ -99,4 +99,93 @@ public class boardDAO {
 			pstmt.close();
 		}
 	}
+	
+
+	public boardVO getBoardDetail(int board_num) throws SQLException{
+		// Connection,PreparedStatement,ResultSet,List<boardVO> 선언
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		boardVO board = null;
+		
+		try { 
+			// db연결
+			con = ds.getConnection();
+			//쿼리 작성
+			String sql = "SELECT * FROM board_info WHERE board_num = ?";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, board_num);
+			//쿼리 실행
+			rs = pstmt.executeQuery();
+			
+			rs.next();
+			int boardNum = rs.getInt("board_num");
+			String title = rs.getString("title");
+			String content = rs.getString("content");
+			String writer = rs.getString("writer");
+			int hit = rs.getInt("hit");
+			java.sql.Date bdate = rs.getDate("bdate");
+			java.sql.Date mdate = rs.getDate("mdate");
+			// boardVO객체에 boardData 안에 유저 정보 넣기
+			board = new boardVO(boardNum, title, content, writer, hit, bdate, mdate);
+			// boardData를 배열boardList에 추가
+			
+		} catch(Exception e) {
+			e.printStackTrace();
+		} finally{
+			con.close();
+			pstmt.close();
+			rs.close();
+		}
+		return board;
+	}
+
+
+	// deletBoard 메서드를 만들어서 삭제처리 되게 만들어주세요
+	public void deleteBoard (int boardNum) throws SQLException {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			// db연결
+			con = ds.getConnection();
+			//쿼리 작성
+			String sql = "delete from board_info WHERE board_num = ?";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, boardNum);
+			
+			
+			//쿼리 실행
+			int insert = pstmt.executeUpdate();
+		}catch(Exception e) {
+			e.printStackTrace();
+		} finally{
+			con.close();
+			pstmt.close();
+		}
+	}
+	
+	// public boardVO boardUpdate 
+	public void boardUpdate (String title, String content, int boardNum) throws SQLException {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		try {
+			// db연결
+			con = ds.getConnection();
+			//쿼리 작성
+			String sql = "UPDATE board_info SET title = ?, content = ?, mdate=now() WHERE board_num = ?";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, title);
+			pstmt.setString(2, content);
+			pstmt.setInt(3, boardNum);
+			
+			int insert = pstmt.executeUpdate();
+			//쿼리 실행
+		}catch(Exception e) {
+			e.printStackTrace();
+		} finally{
+			con.close();
+			pstmt.close();
+		}
+	}
 }
