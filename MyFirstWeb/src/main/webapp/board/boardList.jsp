@@ -44,8 +44,8 @@
       		<td> ${i.hit }</td>
    		</tr>
 	</c:forEach>
-    
   </tbody>
+   <a href="/MyFirstWeb/boardInsertForm"><button>글쓰기</button></a>
 </table>
 </body>
 </html>
