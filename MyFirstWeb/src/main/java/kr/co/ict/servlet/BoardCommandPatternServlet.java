@@ -30,6 +30,13 @@ public class BoardCommandPatternServlet extends HttpServlet {
 		//.test 앞의 문자가 뭔지 감지해서 사용자의 요청을 파악함
 		String uri = request.getRequestURI();
 		System.out.println(uri);
+		if(uri.equals("/MyFirstWeb/boardList.test")) {
+			response.sendRedirect("/MyFirstWeb/boardList");
+		} else if(uri.equals("/MyFirstWeb/login.test")) {
+			response.sendRedirect("/MyFirstWeb/login_form.jsp");
+		} else {
+			response.sendRedirect("/MyFirstWeb/");
+		}
 	}
 
 	/**

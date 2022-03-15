@@ -39,7 +39,9 @@ public class insertBoardServlet extends HttpServlet {
 		boardDAO bDAO = boardDAO.getInstance();
 		// insert로직 호출(필요 파라미터는 폼에서 날아온다고 가정하고 입력해주세요
 		// 폼에서 날아올떄 사용하는 name은 title, content, writer입니다.
+		System.out.println(title+content+writer);
 		try {
+			System.out.println(title+content+writer);
 			bDAO.insertBoard(title, content, writer);
 			
 		} catch (SQLException e) {

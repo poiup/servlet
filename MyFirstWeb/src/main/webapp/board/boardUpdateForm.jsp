@@ -7,7 +7,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<form action="/MyFirstWeb/BoardUpdate" method="post">
+	<form action="/MyFirstWeb/BoardUpdate.do" method="post">
 		글제목 : <input type="text" name="title" value="${board.title }" >
 		글쓴이 : ${board.writer }"
 		조회수 : ${board.hit }<br/>
