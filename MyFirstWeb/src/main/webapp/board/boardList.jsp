@@ -45,7 +45,9 @@
    		</tr>
 	</c:forEach>
   </tbody>
-   <a href="/MyFirstWeb/boardInsertForm.do"><button>글쓰기</button></a>
+  <c:if test="${not empty sId }">
+   	<a href="/MyFirstWeb/boardInsertForm.do"><button>글쓰기</button></a>
+  </c:if>
 </table>
 </body>
 </html>

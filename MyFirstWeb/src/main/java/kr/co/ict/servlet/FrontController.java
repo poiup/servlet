@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import kr.co.ict.servlet.service.BoardDeleteService;
 import kr.co.ict.servlet.service.BoardDetailService;
+import kr.co.ict.servlet.service.BoardInsertFormService;
 import kr.co.ict.servlet.service.BoardInsertService;
 import kr.co.ict.servlet.service.BoardListService;
 import kr.co.ict.servlet.service.BoardUpdateFormService;
@@ -85,6 +86,8 @@ public class FrontController extends HttpServlet {
 			sv.execute(request, response);
 			ui = "/board/boarddetail.jsp";
 		}else if(uri.equals("/MyFirstWeb/boardInsertForm.do")) {
+			sv = new BoardInsertFormService();
+			sv.execute(request, response);
 			ui = "/board/boardForm.jsp";
 		}else if(uri.equals("/MyFirstWeb/insertBoard.do")) {		
 			sv = new BoardInsertService();
@@ -102,6 +105,8 @@ public class FrontController extends HttpServlet {
 			sv = new BoardUpdateService();
 			sv.execute(request, response);
 			ui = "/boarddetail.do";
+		} else {
+			ui = "/index.jsp";
 		}
 		// 위쪽 if~else문을 다 호출한 다음 실제로 포워딩 실행
 		System.out.println(ui);

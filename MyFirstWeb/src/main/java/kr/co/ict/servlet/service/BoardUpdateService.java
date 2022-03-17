@@ -4,6 +4,7 @@ import java.sql.SQLException;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import kr.co.ict.boardDAO;
 import kr.co.ict.boardVO;
@@ -17,14 +18,18 @@ public class BoardUpdateService implements IBoardService {
 		String title = request.getParameter("title");
 		String content = request.getParameter("content");
 		int board_num = Integer.parseInt(request.getParameter("board_num"));
-				
-		// 4. 저장한 변수를 이용해 updateBoard() 메서드를 호출해줍니다.
-		try {
-			bDAO.boardUpdate(title, content, board_num);
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		HttpSession session = request.getSession();
 		
+		String sName = (String)session.getAttribute("login_pass");
+		String fName = request.getParameter("writer");
+		if(sName.equals(fName)) {
+			// 4. 저장한 변수를 이용해 updateBoard() 메서드를 호출해줍니다.
+			try {
+				bDAO.boardUpdate(title, content, board_num);
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 	}
 }

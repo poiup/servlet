@@ -129,7 +129,7 @@ public class boardDAO {
 			// boardVO객체에 boardData 안에 유저 정보 넣기
 			board = new boardVO(boardNum, title, content, writer, hit, bdate, mdate);
 			// boardData를 배열boardList에 추가
-			
+			upHit(boardNum);
 		} catch(Exception e) {
 			e.printStackTrace();
 		} finally{
@@ -188,4 +188,24 @@ public class boardDAO {
 			pstmt.close();
 		}
 	}
+
+
+	public void upHit(int bId) {
+		System.out.println("현재 조회된 글번호 : " + bId);
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		boardVO board = null;
+		try {
+			String sql = "UPDATE board_info SET hit = (hit+1) WHERE board_num=?";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, bId);
+			
+			int uphit = pstmt.executeUpdate();
+		} catch(Exception e) {
+			
+		}
+	
+	}
+
 }

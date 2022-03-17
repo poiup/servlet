@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -15,14 +16,17 @@
 	마지막 수정날짜 :${board.mdate }<br/>
 	본문 : ${board.content }<br/>
 	<a href="/MyFirstWeb/boardList.do">목록으로</a>
-	<form action="/MyFirstWeb/BoardDelete.do" method="post">
-		<input type="hidden" name="board_num" value="${board.board_num }">
-		<input type="submit" value="삭제하기" >
-	</form>
-	<form action="/MyFirstWeb/BoardUpdateForm.do" method="post">
-		<input type="hidden" name="board_num" value="${board.board_num }">
-		<input type="submit" value="수정하기">
-	</form>
-	
+	<c:if test="${board.writer == sessionScope.login_pass }">
+		<form action="/MyFirstWeb/BoardDelete.do" method="post">
+			<input type="hidden" name="board_num" value="${board.board_num }">
+			<input type="hidden" name="writer" value="${board.writer }">
+			<input type="submit" value="삭제하기" >
+		</form>
+		<form action="/MyFirstWeb/BoardUpdateForm.do" method="post">
+			<input type="hidden" name="board_num" value="${board.board_num }">
+			<input type="hidden" name="writer" value="${board.writer }">
+			<input type="submit" value="수정하기">
+		</form>
+	</c:if>
 </body>
 </html>
