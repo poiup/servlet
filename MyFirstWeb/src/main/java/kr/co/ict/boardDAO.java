@@ -37,7 +37,7 @@ public class boardDAO {
 	
 	}
 	
-	public List<boardVO> getAllboardList() throws SQLException{
+	public List<boardVO> getAllboardList(int pageNum) throws SQLException{
 		// Connection,PreparedStatement,ResultSet,List<boardVO> 선언
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -46,9 +46,11 @@ public class boardDAO {
 		try { 
 			// db연결
 			con = ds.getConnection();
+			int limitNum = (pageNum-1)*10;
 			//쿼리 작성
-			String sql = "SELECT * FROM board_info ORDER BY board_num DESC";
+			String sql = "SELECT * FROM board_info ORDER BY board_num DESC limit ?, 10";
 			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, limitNum);
 			//쿼리 실행
 			rs = pstmt.executeQuery();
 			
@@ -109,6 +111,7 @@ public class boardDAO {
 		boardVO board = null;
 		
 		try { 
+			
 			// db연결
 			con = ds.getConnection();
 			//쿼리 작성
@@ -123,13 +126,12 @@ public class boardDAO {
 			String title = rs.getString("title");
 			String content = rs.getString("content");
 			String writer = rs.getString("writer");
-			int hit = rs.getInt("hit");
 			java.sql.Date bdate = rs.getDate("bdate");
 			java.sql.Date mdate = rs.getDate("mdate");
+			int hit = rs.getInt("hit");
 			// boardVO객체에 boardData 안에 유저 정보 넣기
 			board = new boardVO(boardNum, title, content, writer, hit, bdate, mdate);
 			// boardData를 배열boardList에 추가
-			upHit(boardNum);
 		} catch(Exception e) {
 			e.printStackTrace();
 		} finally{
@@ -139,7 +141,6 @@ public class boardDAO {
 		}
 		return board;
 	}
-
 
 	// deletBoard 메서드를 만들어서 삭제처리 되게 만들어주세요
 	public void deleteBoard (int boardNum) throws SQLException {
@@ -191,21 +192,20 @@ public class boardDAO {
 
 
 	public void upHit(int bId) {
-		System.out.println("현재 조회된 글번호 : " + bId);
 		Connection con = null;
 		PreparedStatement pstmt = null;
-		ResultSet rs = null;
-		boardVO board = null;
+		System.out.println("현재 조회된 글번호 : " + bId);
+		
 		try {
+			con = ds.getConnection();
 			String sql = "UPDATE board_info SET hit = (hit+1) WHERE board_num=?";
 			pstmt = con.prepareStatement(sql);
 			pstmt.setInt(1, bId);
-			
 			int uphit = pstmt.executeUpdate();
-		} catch(Exception e) {
-			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-	
 	}
 
 }

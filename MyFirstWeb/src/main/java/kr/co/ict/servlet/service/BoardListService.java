@@ -15,11 +15,28 @@ public class BoardListService implements IBoardService{
 	
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws SQLException {
+		// 페이지번호 받기
+		 int pageNum = 0;
+		 String page = request.getParameter("pageNum");
+		 
+		// if(request.getParameter("pageNum") == null) {
+		//	 pageNum = 1;			 
+		// } else {
+		//	 pageNum = Integer.parseInt(page);
+		// }
+		 
+		 try {
+			 pageNum = Integer.parseInt(page);
+		 } catch(Exception e) {
+			 pageNum=1;
+		 }
+		 System.out.println(pageNum);
 		//1. 접속시 BoardDAO 생성
 		boardDAO bDAO = boardDAO.getInstance();
 		//2. BoardDAO의 getALLBoardList()호출해 전체 게시글 정보 받아오기
-		List<boardVO> boardList = bDAO.getAllboardList();
+		List<boardVO> boardList = bDAO.getAllboardList(pageNum);
 		
+		System.out.println(boardList);
 		//3. request.setAttribute로 바인딩하기
 		request.setAttribute("boardList", boardList);
 		

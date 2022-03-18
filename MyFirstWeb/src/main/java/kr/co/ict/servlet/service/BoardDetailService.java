@@ -17,6 +17,7 @@ public class BoardDetailService implements IBoardService{
 
 		// dao생성
 		boardDAO bDAO = boardDAO.getInstance();
+		bDAO.upHit(board_num);
 		boardVO board = bDAO.getBoardDetail(board_num);
 		// dao에서 해당 글번호에 대한 정보를 가져오고
 		// 정보가 제대로 들어왔는지 디버깅 해보겠습니다.
