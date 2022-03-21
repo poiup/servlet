@@ -46,9 +46,9 @@ public class boardDAO {
 		try { 
 			// db연결
 			con = ds.getConnection();
-			int limitNum = (pageNum-1)*10;
+			int limitNum = (pageNum-1)*20;
 			//쿼리 작성
-			String sql = "SELECT * FROM board_info ORDER BY board_num DESC limit ?, 10";
+			String sql = "SELECT * FROM board_info ORDER BY board_num DESC limit ?, 20";
 			pstmt = con.prepareStatement(sql);
 			pstmt.setInt(1, limitNum);
 			//쿼리 실행
@@ -208,4 +208,29 @@ public class boardDAO {
 		}
 	}
 
+	public int getPageNum() throws SQLException {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		int allPage = 1;
+		try { 	
+			// db연결
+			con = ds.getConnection();
+			//쿼리 작성
+			String sql = "SELECT COUNT(*) FROM board_info";
+			pstmt = con.prepareStatement(sql);
+			//쿼리 실행
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				allPage = rs.getInt("COUNT(*)");
+			}
+		} catch(Exception e) {
+			e.printStackTrace();
+		} finally{
+			con.close();
+			pstmt.close();
+			rs.close();
+		}
+		return allPage;
+	}
 }

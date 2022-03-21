@@ -40,8 +40,9 @@ public class BoardListServlet extends HttpServlet {
 			boardDAO bDAO = boardDAO.getInstance();
 		//2. BoardDAO의 getALLBoardList()호출해 전체 게시글 정보 받아오기
 			List<boardVO> boardList = null;
+			int pageNum = 1;
 			try {
-				boardList =	bDAO.getAllboardList();
+				boardList =	bDAO.getAllboardList(pageNum);
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}

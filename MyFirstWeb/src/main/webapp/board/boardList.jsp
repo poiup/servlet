@@ -49,5 +49,25 @@
    	<a href="/MyFirstWeb/boardInsertForm.do"><button>글쓰기</button></a>
   </c:if>
 </table>
+ 
+	<ul>
+ 	
+	</ul>
+
+<nav aria-label="Page navigation example">
+  <ul class="pagination">
+  	<c:if test="${BoardDTO.startPage != 1 }">
+		<li class="page-item"><a class="page-link" href="/MyFirstWeb/boardList.do?pageNum=${BoardDTO.startPage -1}">Previous</a></li>
+  	</c:if>
+  	<c:forEach var="i" begin="${BoardDTO.startPage }" end="${BoardDTO.endPage }" step="1">
+		<li class="page-item"><a class="page-link" href="/MyFirstWeb/boardList.do?pageNum=${i}">${i}</a></li>
+	</c:forEach>
+	<c:if test="${BoardDTO.endPage != BoardDTO.totalPages }">
+		<li class="page-item"><a class="page-link" href="/MyFirstWeb/boardList.do?pageNum=${BoardDTO.endPage +1}">Next</a></li>
+ 	</c:if>
+  </ul>
+</nav>
+	
+${BoardDTO }
 </body>
 </html>
